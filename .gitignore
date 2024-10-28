@@ -1,10 +1,12 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/6841/node_modules
-/6841/.pnp
-/6841/.pnp.js
-/6841/.yarn/install-state.gz
+/website/node_modules
+/website/.pnp
+/website/.pnp.js
+/website/.yarn/install-state.gz
+/website/postcss.config.mjs
+/website/.next
 
 # testing
 /coverage
