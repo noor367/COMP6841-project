@@ -7,7 +7,7 @@ import React from 'react';
 export default function Footer() {
   return (
     <Sheet>
-      <Box className='bg-dark-blue' py={2} px={4} />
+      <Box className='bg-dark-purple' py={2} px={4} />
     </Sheet>
   );
 }
