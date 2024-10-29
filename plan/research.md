@@ -17,11 +17,7 @@ The most famous historic cipher that we still talk about today is Ceaser's Ciphe
 
 # CTF
 
-Capture the flag (CTF) challenges are common exercises in computer security where a program is purposefully vulnerable to allow the challenge participant to find exploits and recover the "flag" text string.
-
-The term comes from the playground sport of the same name.
-
-Much like this entire project, CTF challenges are educational and offer hands-on technical applications of concepts learned.
+Capture the flag (CTF) challenges are common exercises in computer security where a program is purposefully vulnerable to allow the challenge participant to find exploits and recover the "flag" text string. The term comes from the playground sport of the same name. Much like this entire project, CTF challenges are educational and offer hands-on technical applications of concepts learned.
 
 # About
 
