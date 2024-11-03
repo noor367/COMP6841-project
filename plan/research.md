@@ -195,6 +195,8 @@ Here's how it works:
 
 ### Caeser Cipher
 
+THIS IS THE SAME AS A ROTATION CIPHER.
+
 # CTF
 
 Capture the flag (CTF) challenges are common exercises in computer security where a program is purposefully vulnerable to allow the challenge participant to find exploits and recover the "flag" text string. The term comes from the playground sport of the same name. Much like this entire project, CTF challenges are educational and offer hands-on technical applications of concepts learned.
