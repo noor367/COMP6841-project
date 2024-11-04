@@ -1,5 +1,5 @@
 export const navData = [
-  { text: 'Home', href: '/home' },
+  { text: 'Home', href: '/' },
   { text: 'Learn', href: '/learn' },
   { text: 'CTF Writeups', href: '/ctf',
     subData: [
