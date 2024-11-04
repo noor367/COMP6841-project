@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Typography, Stack } from '@mui/joy';
+import { Box, Button, Typography, Stack } from '@mui/joy';
 
 const CaesarCipher = () => {
   const [input, setInput] = useState('');
@@ -26,25 +26,29 @@ const CaesarCipher = () => {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Typography variant="h5" gutterBottom>
+      <Typography level="h2" gutterBottom>
         Caesar Cipher Encoder/Decoder
       </Typography>
-      <TextField
-        label="Input Text"
-        variant="outlined"
-        fullWidth
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        sx={{ marginBottom: 2 }}
-      />
-      <TextField
-        label="Shift Amount"
-        type="number"
-        variant="outlined"
-        value={shift}
-        onChange={(e) => setShift(e.target.value)}
-        sx={{ marginBottom: 2 }}
-      />
+      <div>
+        <label htmlFor="inputText">Input Text:</label>
+        <input
+          id="inputText"
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          style={{ width: '100%', marginBottom: '16px', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
+        />
+      </div>
+      <div>
+        <label htmlFor="shiftAmount">Shift Amount:</label>
+        <input
+          id="shiftAmount"
+          type="number"
+          value={shift}
+          onChange={(e) => setShift(e.target.value)}
+          style={{ width: '100%', marginBottom: '16px', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
+        />
+      </div>
       <Stack direction="row" spacing={2} sx={{ marginBottom: 2 }}>
         <Button variant="contained" onClick={handleEncode}>
           Encode
@@ -54,7 +58,14 @@ const CaesarCipher = () => {
         </Button>
       </Stack>
       {output && (
-        <Box>
+        <Box
+          sx={{ 
+            marginTop: 2, 
+            padding: 2, 
+            border: '1px solid', 
+            borderColor: 'grey.400', 
+            borderRadius: '4px'
+          }}>
           <Typography variant="h6">Output:</Typography>
           <Typography>{output}</Typography>
         </Box>

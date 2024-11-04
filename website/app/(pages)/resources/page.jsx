@@ -1,8 +1,9 @@
 'use client'
 import React from 'react'
-import { Typography, Stack, Box } from '@mui/joy'
+import { Typography, Stack, Box, Link } from '@mui/joy'
 import Base64Encoder from '@/components/Base64Encoder'
 import HeadingBodyText from '@/components/HeadingBody'
+import CaesarCipher from '@/components/CaesarCipher'
 
 function Base64Info() {
   const body = "This activity relates to OTW Krypton activity Level 0 - 1. Here is a tool that can encode/decode base64 strings. Try decipher this to give it a start: ";
@@ -34,9 +35,13 @@ function Additional() {
         Additional Resources
       </Typography>
       <Typography level='body'>
-        [CryptoTool](https://www.cryptool.org/en/cto/) - An variety of online (and downloadable) tools
-        [CyberChef](https://gchq.github.io/CyberChef/) - Online encoder/decoder for a lot of popular and common ciphers
-        [CTF Handbook](https://ctf101.org/) - Useful wiki of information
+        <Link href='https://www.cryptool.org/en/cto/'>CryptoTool</Link> - An variety of online (and downloadable) tools
+        <br />
+        <Link href='https://gchq.github.io/CyberChef/'>CyberChef</Link> - Online encoder/decoder for a lot of popular and common ciphers
+        <br />
+        <Link href='https://ctf101.org/'>CTF Handbook</Link> - Useful wiki of information
+        <br />
+        <Link href='https://cryptohack.org/'>CryptoHack</Link> - A learning platform with step-by-step challenges
       </Typography>
     </Box>
   )
@@ -48,6 +53,7 @@ export default function Resources() {
     <Box direction='column' maxWidth='1800px' alignItems='center' margin='auto' pt={4} pb={10} px={10}>
       <HeadingBodyText heading={'Resources and Tools'} body={body} />
       <Base64Info />
+      <CaesarCipher />
       <Additional />
     </Box>
   )
