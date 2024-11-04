@@ -1,6 +1,7 @@
 'use client'
 import { Box, Typography } from "@mui/joy";
 import HeadingBodyText from "@/components/HeadingBody";
+import { about } from '@/public/data.json'
 
 export default function Home() {
   return (
@@ -9,7 +10,10 @@ export default function Home() {
       flexDirection: 'column',
       padding: { xs: 2, md: 4 },
     }}>
-      <HeadingBodyText heading='Cryptography' body='hello' color='black' />
+      <HeadingBodyText heading='about' body={about} color='black' />
+      <Typography>
+        
+      </Typography>
     </Box>
   );
 }

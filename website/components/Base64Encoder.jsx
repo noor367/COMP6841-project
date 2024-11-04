@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Typography } from '@mui/joy';
+import { Box, Button, Input, Typography } from '@mui/joy';
 
 const Base64Encoder = () => {
   const [input, setInput] = useState('');
@@ -23,17 +23,17 @@ const Base64Encoder = () => {
   };
 
   return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant="h5" gutterBottom>
+    <Box p={2}>
+      <Typography level="h4" gutterBottom>
         Base64 Encoder/Decoder
       </Typography>
-      <TextField
-        label="Input"
+      <Input
+        placeholder="Input"
         variant="outlined"
         fullWidth
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        sx={{ marginBottom: 2 }}
+        sx={{ marginBottom: 2, height: '56px', fontSize: '1.2rem' }} // Increased height and font size
       />
       <Button variant="contained" onClick={handleEncode} sx={{ marginRight: 1 }}>
         Encode
@@ -43,15 +43,31 @@ const Base64Encoder = () => {
       </Button>
 
       {encoded && (
-        <Box sx={{ marginTop: 2 }}>
-          <Typography variant="h6">Encoded:</Typography>
+        <Box 
+          sx={{ 
+            marginTop: 2, 
+            padding: 2, 
+            border: '1px solid', 
+            borderColor: 'grey.400', 
+            borderRadius: '4px'
+          }}
+        >
+          <Typography level='h5'>Encoded:</Typography>
           <Typography>{encoded}</Typography>
         </Box>
       )}
       {decoded && (
-        <Box sx={{ marginTop: 2 }}>
-          <Typography variant="h6">Decoded:</Typography>
-          <Typography>{decoded}</Typography>
+        <Box 
+          sx={{ 
+            marginTop: 2, 
+            padding: 2, 
+            border: '1px solid', 
+            borderColor: 'grey.400', 
+            borderRadius: '4px'
+          }}
+        >
+          <Typography level='h5'>Decoded:</Typography>
+          <Typography level='body'>{decoded}</Typography>
         </Box>
       )}
     </Box>

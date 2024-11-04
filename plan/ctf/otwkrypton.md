@@ -18,7 +18,8 @@ Welcome to Krypton! The first level is easy. The following string encodes the pa
 S1JZUFRPTklTR1JFQVQ=
 Use this password to log in to krypton.labs.overthewire.org with username krypton1 using SSH on port 2231. You can find the files for other levels in /krypton/
 
-Explanation
+### Helpful Information
+
 link to the research docs Base64
 
 - Although this problem is about base64, this is considered an encoding scheme rather than a secure encryption.
@@ -28,7 +29,8 @@ Encoding is about transforming data into a different format to ensure it's safel
 
 Encryption, on the other hand, involves transforming data to keep it secret and secure. It uses algorithms and keys to convert plaintext into ciphertext, making it unreadable to anyone who doesn't have the proper decryption key.
 
-Walkthrough - hide with spoiler tag
+### Walkthrough
+
 A problem like this can be trivially solved with the built-in linux tool commands.
 I used `echo S1JZUFRPTklTR1JFQVQ= | base64 -d`.
 You can read the man page for base 64 [here](S1JZUFRPTklTR1JFQVQ=) but basically the base64 command can encode/decode data and print it to standard output. By adding the `-d` I specified that I wanted it to be decoded, not including this would automatically have the provided string encoded.
@@ -43,10 +45,12 @@ Here is a base64 encoder/decoder.
 
 The password for level 2 is in the file 'krypton2'. It is 'encrypted' using a simple rotation. It is also in non-standard ciphertext format. When using alpha characters for cipher text it is normal to group the letters into 5 letter clusters, regardless of word boundaries. This helps obfuscate any patterns. This file has kept the plain text word boundaries and carried them to the cipher text. Enjoy!
 
-Explanation
+### Helpful Information
+
 link to the research docs Rot ciphers
 
-Walkthrough
+### Walkthrough
+
 First, `cd /krypton/` which is where all the files are (mentioned in the Level 0->1 instructions) and then move into the level 1 direction krypton1. There is a README in this folder that provides the same instructions as the website with an added clue. The clue is that the file has been encrypted with a Rot13 cipher, which is one of the most common ciphers.
 
 There are multiple methods of completing this task so let's first go through how I did this:
@@ -78,11 +82,12 @@ One shot can solve it!
 
 Have fun.
 
-Explanation
+### Helpful Information
 
 The Caeser Cipher is another substitution cipher similar to Rot13 except instead of shifting 13 places, we are unaware how many places this has shifted. The easy part about Rot13 is that because the English alphabet is only 26 letters, the encoding and decoding of Rot13 is the same transformation.
 
-Walkthrough
+### Walkthrough
+
 First let's understand the files given to us in /krypton/krypton2 directory. We have the executable file called `encrypt` which will encrypt a give file using the cipher. We have the password in the krypton3 file and then a README with the same instructions given on the website. Opening this README shows that we should create a temp directory to ensure anything we create and change will not affect the challenge for others.
 
 It would be possible but illogical for us to just try out every single alphabet shift in order to solve this challenge.
@@ -107,11 +112,13 @@ You know the following important details:
 
 The message plaintexts are in American English (very important) - They were produced from the same key (even better!)
 
-Explanation
+### Helpful Information
+
 The English language contains a lot of clues from the way that phrases are constructed. This includes the length of words, grammar, and frequency of letters. From the way that we use English, we can inuitively fill in the gaps when reading sentences.
 Take this for example: "Yuo cna siltl raed waht I ma syanig" Despite none of the words being spelled correctly, the meaning can still be deciphered. Let's also take a look at [use decipher.wtf as example]
 
-Walkthrough
+### Walkthrough
+
 There are many approaches to this problem. What we want to do is conduct a frequency analysis of the foundx files and then map the frequency of those letters to the English alphabet. We can see the existing frequency of letters outlined (here)[https://www3.nd.edu/~busiforc/handouts/cryptography/letterfrequencies.html].
 To analyse the frequency, you could write a simple script looping the alphabet and utilising cat, tr, wc, and sort commands.
 Additionally there are many online tools that can be used.
@@ -126,11 +133,13 @@ This level is a Vigenère Cipher. You have intercepted two longer, english langu
 
 For this exercise, the key length is 6. The password to level five is in the usual place, encrypted with the 6 letter key.
 
-Explanation
+### Helpful Information
+
 In the previous levels, we have used simple substitution ciphers that require just swapping out one letter for another. They are "monoalphebetic" which is just a one to one fixed mapping of plaintext to ciphertext. The Vignere Cipher is "polyalphabetic" which means one plaintext character maps to multiple ciphertext characters.
 Read more on this cipher - link to the research docs
 
-Walkthrough
+### Walkthrough
+
 Here is my plan for this task. I want to separate the letters into groups of 6 letters. Then, I will group together all the 1st, 2nd, 3rd, 4th, 5th, and 6th letters to perform frequency analysis on those letters.
 This is the encrypted krypton5 file contents: HCIKV RJOX
 Here is how I used python to achieve this:
@@ -183,10 +192,12 @@ This can be done using a Vigenère square, online tools, or just mapping out the
 
 FA can break a known key length as well. Lets try one last polyalphabetic cipher, but this time the key length is unknown. Note: the text is writen in American English
 
-Explanation
+### Helpful Information
+
 FA refers to frequency analysis and it is the process we have been doing these past few levels to find our solutions.
 
-Walkthrough
+### Walkthrough
+
 In this instance, I simply just used the website I found in the previous level's walkthrough. There are a couple of Vigenère Cipher solvers.
 Something interesting I noticed with all these frequency analysis activities is that you have to analyse each file separately rather than as a whole text. These online solvers were able to correctly decipher the keylength accurately with even just the first found file. I ran all three through just to make sure then decoded the password to move on to the next level.
 RANDOM
@@ -203,7 +214,7 @@ If you have further difficulty, there is a hint in ‘HINT2’.
 
 The password for level 7 (krypton7) is encrypted with ‘encrypt6’.
 
-Explanation
+Helpful Information
 
 ## Activities
 

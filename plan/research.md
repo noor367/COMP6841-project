@@ -196,6 +196,13 @@ Here's how it works:
 ### Caeser Cipher
 
 THIS IS THE SAME AS A ROTATION CIPHER.
+Shifting the alphabet a fixed number of times
+
+## Common Techniques
+
+When deciphering ... context is an important clue that can be used to interpret a lot of messages. This can be the size of words, layout of a sentence, knowledge of the subject matter, punctuation, and letter frequency.
+
+Frequency analysis
 
 # CTF
 

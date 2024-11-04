@@ -1,5 +1,7 @@
 # HackTheBox
 
+HackTheBox is a platform with a multitude of services, including hosting CTF challenges. The challenges in these writeups are part of the perpetually ongoing "Try Out" CTF event. In walkthorughs, where applicable, speicifc urls are never specified since these are launched via docker uniquely when someone starts a challenge. Instead, to indicate the start of the url, `host:port/` is used.
+
 ## Dynastic - Crypto
 
 You find yourself trapped inside a sealed gas chamber, and suddenly, the air is pierced by the sound of a distorted voice played through a pre-recorded tape. Through this eerie transmission, you discover that within the next 15 minutes, this very chamber will be inundated with lethal hydrogen cyanide. As the tape’s message concludes, a sudden mechanical whirring fills the chamber, followed by the ominous ticking of a clock. You realise that each beat is one step closer to death. Darkness envelops you, your right hand restrained by handcuffs, and the exit door is locked. Your situation deteriorates as you realise that both the door and the handcuffs demand the same passcode to unlock. Panic is a luxury you cannot afford; swift action is imperative. As you explore your surroundings, your trembling fingers encounter a torch. Instantly, upon flipping the switch, the chamber is bathed in a dim glow, unveiling cryptic letters etched into the walls and a disturbing image of a Roman emperor drawn in blood. Decrypting the letters will provide you the key required to unlock the locks. Use the torch wisely as its battery is almost drained out!
@@ -161,4 +163,103 @@ http://host:port/?format=%H:%M:%S
 
 We can run a few commands to see how this alters the webpage's display. I played around with some echo and ls commands. What we are really after is the flag, which we know is just called `flag` because of the files we were provided with. We can craft our payload as `format=';cat ../flag'`. We enter this into that part of the URL which shows the flag. It was a bit long so I had to zoom out a bit to copy the entire thing.
 
-##
+## Flag Command - Web
+
+Embark on the "Dimensional Escape Quest" where you wake up in a mysterious forest maze that's not quite of this world. Navigate singing squirrels, mischievous nymphs, and grumpy wizards in a whimsical labyrinth that may lead to otherworldly surprises. Will you conquer the enchanted maze or find yourself lost in a different dimension of magical challenges? The journey unfolds in this mystical escape!
+
+### Explanation
+
+Webpages we visit on the internet are formatted with HTML (hypertext markup language) which can be accessed by right-clicking and inspecting the page you are on. This opens a browser's developer tools which allow you to edit and analyse the page you are currently viewing. Editing the page here won't affect the code of the hosted website but it will affect how the page loads on your specific machine.
+
+### Walkthrough
+
+First access the page's HTML file through inspect and see if there is any indication of scripts as this is what we are interested in - the JS code execution.
+
+```
+<script src="/static/terminal/js/commands.js" type="module"></script>
+<script src="/static/terminal/js/main.js" type="module"></script>
+<script src="/static/terminal/js/game.js" type="module"></script>
+<script type="module">
+    import { startCommander, enterKey, userTextInput } from "/static/terminal/js/main.js";
+    startCommander();
+
+    window.addEventListener("keyup", enterKey);
+
+    // event listener for clicking on the terminal
+    document.addEventListener("click", function () {
+      userTextInput.focus();
+    });
+
+
+</script>
+```
+
+From these script elements, we can see that the site deals with user input in the main.js script. We can add this to the end of our url to access the file. `host:port/static/terminal/js/main.js`
+
+The file is long so I used ctrl+f to search for key words that would be of use. Searching for "htb" led me to this section
+
+```
+if (availableOptions[currentStep].includes(currentCommand) || availableOptions['secret'].includes(currentCommand)) {
+        await fetch('/api/monitor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 'command': currentCommand })
+        })
+            .then((res) => res.json())
+            .then(async (data) => {
+                console.log(data)
+                await displayLineInTerminal({ text: data.message });
+
+                if(data.message.includes('Game over')) {
+                    playerLost();
+                    fetchingResponse = false;
+                    return;
+                }
+
+                if(data.message.includes('HTB{')) {
+                    playerWon();
+                    fetchingResponse = false;
+
+                    return;
+                }
+```
+
+This gives us a hint to look into how the api works and to find what the "secret" is. We can see at the bottom of the script that all the options for user input can be found at '/api/options' so we add that to our url to find the static file:
+
+```
+{
+  "allPossibleCommands": {
+    "1": [
+      "HEAD NORTH",
+      "HEAD WEST",
+      "HEAD EAST",
+      "HEAD SOUTH"
+    ],
+    "2": [
+      "GO DEEPER INTO THE FOREST",
+      "FOLLOW A MYSTERIOUS PATH",
+      "CLIMB A TREE",
+      "TURN BACK"
+    ],
+    "3": [
+      "EXPLORE A CAVE",
+      "CROSS A RICKETY BRIDGE",
+      "FOLLOW A GLOWING BUTTERFLY",
+      "SET UP CAMP"
+    ],
+    "4": [
+      "ENTER A MAGICAL PORTAL",
+      "SWIM ACROSS A MYSTERIOUS LAKE",
+      "FOLLOW A SINGING SQUIRREL",
+      "BUILD A RAFT AND SAIL DOWNSTREAM"
+    ],
+    "secret": [
+      "Blip-blop, in a pickle with a hiccup! Shmiggity-shmack"
+    ]
+  }
+}
+```
+
+Now that we have the secret, we can just type it into the website's input which then gives us the flag!
