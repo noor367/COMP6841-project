@@ -8,23 +8,23 @@ export default function HackTheBox() {
         HackTheBox
       </Typography>
       <Paper elevation={3} style={{ padding: '16px' }}>
-        <p>
+        <Typography variant='body'>
           HackTheBox is a platform with a multitude of services, including hosting CTF challenges. The challenges in these writeups are part of the perpetually ongoing "Try Out" CTF event. In walkthorughs, where applicable, specific URLs are never specified since these are launched via docker uniquely when someone starts a challenge. Instead, to indicate the start of the URL, <code>host:port/</code> is used.
-        </p>
+        </Typography>
         
         <Typography variant='h2' gutterBottom>
           Dynastic - Crypto
         </Typography>
-        <p>
+        <Typography variant='body'>
           You find yourself trapped inside a sealed gas chamber, and suddenly, the air is pierced by the sound of a distorted voice played through a pre-recorded tape. Through this eerie transmission, you discover that within the next 15 minutes, this very chamber will be inundated with lethal hydrogen cyanide. As the tape’s message concludes, a sudden mechanical whirring fills the chamber, followed by the ominous ticking of a clock. You realise that each beat is one step closer to death. Darkness envelops you, your right hand restrained by handcuffs, and the exit door is locked. Your situation deteriorates as you realise that both the door and the handcuffs demand the same passcode to unlock. Panic is a luxury you cannot afford; swift action is imperative. As you explore your surroundings, your trembling fingers encounter a torch. Instantly, upon flipping the switch, the chamber is bathed in a dim glow, unveiling cryptic letters etched into the walls and a disturbing image of a Roman emperor drawn in blood. Decrypting the letters will provide you the key required to unlock the locks. Use the torch wisely as its battery is almost drained out!
-        </p>
+        </Typography>
         
         <Typography variant='h3' gutterBottom>
           Explanation
         </Typography>
-        <p>
+        <Typography variant='body'>
           The Trithemius cipher is a polyalphabetic substitution cipher that applies a varying shift to the letters based on their position in the plaintext. In its simplest form, it uses a series of Caesar shifts that increment for each subsequent letter.
-        </p>
+        </Typography>
 
         <Typography variant="h3" gutterBottom>
           Walkthrough
@@ -33,7 +33,7 @@ export default function HackTheBox() {
         <Typography variant="h4" gutterBottom>
           Analysis Of Provided Files
         </Typography>
-        <p>We are provided with a source.py file and an output.txt file shown below:</p>
+        <Typography variant='body'>We are provided with a source.py file and an output.txt file shown below:</Typography>
         <pre>
             {`# source.py
 from secret import FLAG
@@ -61,12 +61,12 @@ with open('output.txt', 'w') as f:
     f.write('Make sure you wrap the decrypted text with the HTB flag format :-]\\n')
     f.write(encrypt(FLAG))`}
         </pre>
-        <p>And output.txt:</p>
+        <Typography variant='body'>And output.txt:</Typography>
         <pre>
             {`Make sure you wrap the decrypted text with the HTB flag format :-]
 DJF_CTA_SWYH_NPDKK_MBZ_QPHTIGPMZY_KRZSQE?!_ZL_CN_PGLIMCU_YU_KJODME_RYGZXL`}
         </pre>
-        <p>
+        <Typography variant='body'>
           There is a custom encryption scheme that transforms a plaintext flag into a ciphertext. Let's break down the components of the encryption function to understand how it works:
           <br />
           - to_identity_map(a): This function converts an uppercase letter (A-Z) into a numeric representation (0-25) by subtracting 0x41 (65 in decimal, which is the ASCII value of 'A'). For example, 'A' becomes 0, 'B' becomes 1, ..., and 'Z' becomes 25.
@@ -82,11 +82,11 @@ DJF_CTA_SWYH_NPDKK_MBZ_QPHTIGPMZY_KRZSQE?!_ZL_CN_PGLIMCU_YU_KJODME_RYGZXL`}
           - As a result, the sum is then converted back to a character using from_identity_map().
           <br /> <br />
           This means each letter's position in the ciphertext is influenced by its position in the plaintext. Non-alphabetic characters remain the same, while alphabetic characters shift depending on their position.
-        </p>
+        </Typography>
         <Typography variant="h4" gutterBottom>
           Solution
         </Typography>
-        <p>
+        <Typography variant='body'>
           Now that we have analysed the files and understand our problem, we can craft a script to decrypt the flag. To decrypt, we iterate through the ciphertext and reverse the encryption process.
           <br />
           For each character in the ciphertext:
@@ -99,7 +99,7 @@ DJF_CTA_SWYH_NPDKK_MBZ_QPHTIGPMZY_KRZSQE?!_ZL_CN_PGLIMCU_YU_KJODME_RYGZXL`}
           <br />
           - Convert it back to a character using from_identity_map.
           <br /> <br />
-        </p>
+        </Typography>
         <pre>
             {`def to_identity_map(a):
     return ord(a) - 0x41
@@ -128,14 +128,14 @@ print(decrypted_flag)`}
         <Typography variant='h2' gutterBottom>
           TimeKORP - Web
         </Typography>
-        <p>
+        <Typography variant='body'>
           Are you ready to unravel the mysteries and expose the truth hidden within KROP's digital domain? Join the challenge and prove your prowess in the world of cybersecurity. Remember, time is money, but in this case, the rewards may be far greater than you imagine.
-        </p>
+        </Typography>
         
         <Typography variant='h3' gutterBottom>
           Explanation
         </Typography>
-        <p>
+        <Typography variant='body'>
           URLs often include format strings to specify how data should be displayed or processed. These format strings can be manipulated to exploit vulnerabilities if not properly sanitized. For example, you might encounter URLs like:
           <code>http://example.com/?format=%H:%M:%S</code>
           <br />
@@ -163,7 +163,7 @@ print(decrypted_flag)`}
           - Inject: http://example.com/time?format=%H;%20ls;%20echo%20%H:%M:%S
           <br /> <br />
           This command insertion might exploit the application's functionality, allowing us to run arbitrary commands.
-        </p>
+        </Typography>
 
         <Typography variant="h3" gutterBottom>
           Walkthrough
@@ -176,22 +176,22 @@ print(decrypted_flag)`}
         <Typography variant='h2' gutterBottom>
           Flag Command - Web
         </Typography>
-        <p>
+        <Typography variant='body'>
           Embark on the "Dimensional Escape Quest" where you wake up in a mysterious forest maze that's not quite of this world. Navigate singing squirrels, mischievous nymphs, and grumpy wizards in a whimsical labyrinth that may lead to otherworldly surprises. Will you conquer the enchanted maze or find yourself lost in a different dimension of magical challenges? The journey unfolds in this mystical escape!
-        </p>
+        </Typography>
         
         <Typography variant='h3' gutterBottom>
           Explanation
         </Typography>
-        <p>
+        <Typography variant='body'>
           Webpages we visit on the internet are formatted with HTML (hypertext markup language) which can be accessed by right-clicking and inspecting the page you are on. This opens a browser's developer tools which allow you to edit and analyse the page you are currently viewing. Editing the page here won't affect the code of the hosted website but it will affect how the page loads on your specific machine.
 
-        </p>
+        </Typography>
 
         <Typography variant="h3" gutterBottom>
           Walkthrough
         </Typography>
-        <p>
+        <Typography variant='body'>
           First access the page's HTML file through inspect and see if there is any indication of scripts as this is what we are interested in - the JS code execution.
           <br />
           <pre>
@@ -281,7 +281,7 @@ print(decrypted_flag)`}
           </pre>
           <br />
           Now that we have the secret, we can just type it into the website's input which then gives us the flag!
-        </p>
+        </Typography>
       </Paper>
     </Box>
   );
