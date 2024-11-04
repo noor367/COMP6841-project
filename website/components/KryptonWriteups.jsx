@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Typography, Accordion, AccordionSummary, AccordionDetails, Link, List, ListItem, } from '@mui/joy';
+import { Box, Typography, Accordion, AccordionSummary, AccordionDetails, Link, List, ListItem } from '@mui/joy';
 
+// eslint-disable-next-line react/no-unescaped-entities
 export function Level0() {
   return (
     <Box>

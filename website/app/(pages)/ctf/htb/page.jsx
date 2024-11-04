@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography, Paper, Box } from '@mui/material';
 
+// eslint-disable-next-line react/no-unescaped-entities
 export default function HackTheBox() {
   return (
     <Box  direction='column' maxWidth='1800px' alignItems='center' margin='auto' pt={10} pb={10} px={10}>

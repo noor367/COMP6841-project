@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Stack, Accordion, AccordionSummary, AccordionDetails } from '@mui/joy'
+import { Typography, Stack, Accordion, AccordionSummary, AccordionDetails, ArrowDropDownIcon } from '@mui/joy'
 
 export default function Writeup({ heading, background, challenge, answer }) {
   return (
