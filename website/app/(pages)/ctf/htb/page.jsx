@@ -88,10 +88,19 @@ DJF_CTA_SWYH_NPDKK_MBZ_QPHTIGPMZY_KRZSQE?!_ZL_CN_PGLIMCU_YU_KJODME_RYGZXL`}
         </Typography>
         <p>
           Now that we have analysed the files and understand our problem, we can craft a script to decrypt the flag. To decrypt, we iterate through the ciphertext and reverse the encryption process.
+          <br />
+          For each character in the ciphertext:
+          <br />
+          - If it's a letter, find its position in the alphabet using to_identity_map.
+          <br />
+          - Subtract the index i from this position.
+          <br />
+          - Apply modulo 26 to ensure it wraps around if necessary.
+          <br />
+          - Convert it back to a character using from_identity_map.
+          <br /> <br />
         </p>
-        
-        <Box component="pre">
-          <code>
+        <pre>
             {`def to_identity_map(a):
     return ord(a) - 0x41
 
@@ -115,44 +124,164 @@ def decrypt(ciphertext):
 ciphertext = "DJF_CTA_SWYH_NPDKK_MBZ_QPHTIGPMZY_KRZSQE?!_ZL_CN_PGLIMCU_YU_KJODME_RYGZXL"
 decrypted_flag = decrypt(ciphertext)
 print(decrypted_flag)`}
-          </code>
-        </Box>
-
-        <Typography variant="h4" gutterBottom>
+        </pre>
+        <Typography variant='h2' gutterBottom>
           TimeKORP - Web
         </Typography>
-        <Typography paragraph>
+        <p>
           Are you ready to unravel the mysteries and expose the truth hidden within KROP's digital domain? Join the challenge and prove your prowess in the world of cybersecurity. Remember, time is money, but in this case, the rewards may be far greater than you imagine.
-        </Typography>
-
-        <Typography variant="h5" gutterBottom>
+        </p>
+        
+        <Typography variant='h3' gutterBottom>
           Explanation
         </Typography>
-        <Typography paragraph>
+        <p>
           URLs often include format strings to specify how data should be displayed or processed. These format strings can be manipulated to exploit vulnerabilities if not properly sanitized. For example, you might encounter URLs like:
-        </Typography>
-        <Box component="pre">
-          <code>
-            {`http://example.com/?format=%H:%M:%S`}
-          </code>
-        </Box>
-        <Typography paragraph>
-          This can allow for URL injection and command execution if not handled correctly.
-        </Typography>
+          <code>http://example.com/?format=%H:%M:%S</code>
+          <br />
+          Here, `format` is a query parameter that specifies a time format string.
+          <br /> <br />
+          Why is this important? Because we can then manipulate the url to display information it is not intended to.
+          <br /> <br />
+          URL Injection is a technique where attackers change the URL parameters to inject commands or scripts. This can happen due to inadequate input validation or escaping mechanisms in the web application.
+          <br /> <br />
+          How it works:
+          - Identify Entry Points: Find URLs with parameters that can be manipulated.
+          <br />
+          - Craft Payloads: Create payloads that exploit the lack of sanitization in these parameters.
+          <br />
+          - Inject Commands: Inject commands through these payloads to gain control over the application.
+          <br /> <br />
+          <b>Example:</b> Suppose we have a URL with a format parameter: <code>http://example.com/time?format=%H:%M:%S</code>
+          <br />
+          Following the process we described above:
+          <br />
+          - Identify: The format parameter isn't sanitized. We can exploit this by injecting commands:
+          <br />
+          - Construct Payload: Inject a command to list files in the directory: `format=';ls;'`
+          <br />
+          - Inject: http://example.com/time?format=%H;%20ls;%20echo%20%H:%M:%S
+          <br /> <br />
+          This command insertion might exploit the application's functionality, allowing us to run arbitrary commands.
+        </p>
 
-        <Typography variant="h4" gutterBottom>
-          Flag Command - Web
-        </Typography>
-        <Typography paragraph>
-          Embark on the "Dimensional Escape Quest" where you wake up in a mysterious forest maze that's not quite of this world. Navigate singing squirrels, mischievous nymphs, and grumpy wizards in a whimsical labyrinth that may lead to otherworldly surprises. Will you conquer the enchanted maze or find yourself lost in a different dimension of magical challenges? The journey unfolds in this mystical escape!
-        </Typography>
-        
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h3" gutterBottom>
           Walkthrough
         </Typography>
-        <Typography paragraph>
-          First access the page's HTML file through inspect and see if there is any indication of scripts as this is what we are interested in - the JS code execution.
+        We are provided with a zip folder with many files inside. We can ignore everything in the root of the folder and go straight to <code>challenge</code>. We are interested in the PHP files since they control the website's display. PHP (Hypertext Preprocessor) is a popular server-side scripting language designed for web development. It's embedded within HTML and executes on the server, generating HTML to be sent to the client's web browser. It is relatively straightforward to read if you are familiar with code.
+        <br /> <br />
+        The index file leads us to the TimeController file. From this, we can understand that the GET request being used to set a value to the $format variable, however, it is not being sanitised or checked which makes it ideal for an injection location. This can already be seen as a red flag in the url of the Docker site. <code>http://host:port/?format=%H:%M:%S</code>
+        <br /> <br />
+        We can run a few commands to see how this alters the webpage's display. I played around with some echo and ls commands. What we are really after is the flag, which we know is just called `flag` because of the files we were provided with. We can craft our payload as `format=';cat ../flag'`. We enter this into that part of the URL which shows the flag. It was a bit long so I had to zoom out a bit to copy the entire thing.
+        <Typography variant='h2' gutterBottom>
+          Flag Command - Web
         </Typography>
+        <p>
+          Embark on the "Dimensional Escape Quest" where you wake up in a mysterious forest maze that's not quite of this world. Navigate singing squirrels, mischievous nymphs, and grumpy wizards in a whimsical labyrinth that may lead to otherworldly surprises. Will you conquer the enchanted maze or find yourself lost in a different dimension of magical challenges? The journey unfolds in this mystical escape!
+        </p>
+        
+        <Typography variant='h3' gutterBottom>
+          Explanation
+        </Typography>
+        <p>
+          Webpages we visit on the internet are formatted with HTML (hypertext markup language) which can be accessed by right-clicking and inspecting the page you are on. This opens a browser's developer tools which allow you to edit and analyse the page you are currently viewing. Editing the page here won't affect the code of the hosted website but it will affect how the page loads on your specific machine.
+
+        </p>
+
+        <Typography variant="h3" gutterBottom>
+          Walkthrough
+        </Typography>
+        <p>
+          First access the page's HTML file through inspect and see if there is any indication of scripts as this is what we are interested in - the JS code execution.
+          <br />
+          <pre>
+            {`<script src="/static/terminal/js/commands.js" type="module"></script>
+<script src="/static/terminal/js/main.js" type="module"></script>
+<script src="/static/terminal/js/game.js" type="module"></script>
+<script type="module">
+    import { startCommander, enterKey, userTextInput } from "/static/terminal/js/main.js";
+    startCommander();
+
+    window.addEventListener("keyup", enterKey);
+
+    // event listener for clicking on the terminal
+    document.addEventListener("click", function () {
+      userTextInput.focus();
+    });
+
+
+</script>`}
+          </pre>
+          <br />
+          From these script elements, we can see that the site deals with user input in the main.js script. We can add this to the end of our url to access the file. <code>host:port/static/terminal/js/main.js</code>
+          <br /> <br />
+          The file is long so I used ctrl+f to search for key words that would be of use. Searching for "htb" led me to this section
+          <pre>
+            {`if (availableOptions[currentStep].includes(currentCommand) || availableOptions['secret'].includes(currentCommand)) {
+        await fetch('/api/monitor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 'command': currentCommand })
+        })
+            .then((res) => res.json())
+            .then(async (data) => {
+                console.log(data)
+                await displayLineInTerminal({ text: data.message });
+
+                if(data.message.includes('Game over')) {
+                    playerLost();
+                    fetchingResponse = false;
+                    return;
+                }
+
+                if(data.message.includes('HTB{')) {
+                    playerWon();
+                    fetchingResponse = false;
+
+                    return;
+                }`}
+          </pre>
+          <br />
+          This gives us a hint to look into how the api works and to find what the "secret" is. We can see at the bottom of the script that all the options for user input can be found at '/api/options' so we add that to our url to find the static file:
+          <br />
+          <pre>
+            {`{
+  "allPossibleCommands": {
+    "1": [
+      "HEAD NORTH",
+      "HEAD WEST",
+      "HEAD EAST",
+      "HEAD SOUTH"
+    ],
+    "2": [
+      "GO DEEPER INTO THE FOREST",
+      "FOLLOW A MYSTERIOUS PATH",
+      "CLIMB A TREE",
+      "TURN BACK"
+    ],
+    "3": [
+      "EXPLORE A CAVE",
+      "CROSS A RICKETY BRIDGE",
+      "FOLLOW A GLOWING BUTTERFLY",
+      "SET UP CAMP"
+    ],
+    "4": [
+      "ENTER A MAGICAL PORTAL",
+      "SWIM ACROSS A MYSTERIOUS LAKE",
+      "FOLLOW A SINGING SQUIRREL",
+      "BUILD A RAFT AND SAIL DOWNSTREAM"
+    ],
+    "secret": [
+      "Blip-blop, in a pickle with a hiccup! Shmiggity-shmack"
+    ]
+  }
+}`}
+          </pre>
+          <br />
+          Now that we have the secret, we can just type it into the website's input which then gives us the flag!
+        </p>
       </Paper>
     </Box>
   );
